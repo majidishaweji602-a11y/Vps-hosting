@@ -1,0 +1,235 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#050b18">
+  <title>Account | PRINCE VPS HOSTING</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .auth-section {
+      min-height: 85vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 440px;
+      background: #0c172b;
+      border: 1px solid rgba(22,228,255,.2);
+      border-radius: 16px;
+      padding: 35px;
+      box-shadow: 0 15px 50px rgba(0,0,0,.3);
+    }
+
+    .auth-card h1 {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .auth-card > p {
+      text-align: center;
+      color: #9aa9c1;
+      font-size: 13px;
+      margin-bottom: 25px;
+    }
+
+    .auth-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 25px;
+    }
+
+    .auth-tabs button {
+      flex: 1;
+      padding: 12px;
+      border: 1px solid #243653;
+      background: transparent;
+      color: white;
+      border-radius: 7px;
+      cursor: pointer;
+    }
+
+    .auth-tabs button.active {
+      background: #075bff;
+      border-color: #075bff;
+    }
+
+    .auth-form label {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 7px;
+      color: #c6d2e5;
+    }
+
+    .auth-form input {
+      width: 100%;
+      padding: 13px;
+      margin-bottom: 18px;
+      border: 1px solid #243653;
+      border-radius: 7px;
+      background: #071020;
+      color: white;
+      outline: none;
+    }
+
+    .auth-form input:focus {
+      border-color: #16e4ff;
+    }
+
+    .auth-form .btn {
+      width: 100%;
+      cursor: pointer;
+    }
+
+    .auth-message {
+      text-align: center;
+      font-size: 13px;
+      margin-top: 15px;
+      color: #16e4ff;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .auth-back {
+      display: block;
+      text-align: center;
+      margin-top: 22px;
+      color: #9aa9c1;
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="navbar">
+  <a href="/" class="logo">PRINCE <span>VPS</span></a>
+  <a href="/" class="login">Back to Home</a>
+</header>
+
+<section class="auth-section">
+
+  <div class="auth-card">
+
+    <h1>Welcome Back</h1>
+    <p>Access your PRINCE VPS account</p>
+
+    <div class="auth-tabs">
+      <button id="loginTab" class="active" type="button"
+        onclick="showForm('login')">Login</button>
+
+      <button id="registerTab" type="button"
+        onclick="showForm('register')">Register</button>
+    </div>
+
+    <!-- Login -->
+    <form id="loginForm" class="auth-form">
+
+      <label>Email Address</label>
+      <input type="email" name="email"
+        placeholder="Enter your email" required>
+
+      <label>Password</label>
+      <input type="password" name="password"
+        placeholder="Enter your password" required>
+
+      <button class="btn" type="submit">Login to Account</button>
+
+    </form>
+
+    <!-- Registration -->
+    <form id="registerForm" class="auth-form hidden">
+
+      <label>Full Name</label>
+      <input type="text" name="name"
+        placeholder="Your full name" required>
+
+      <label>Email Address</label>
+      <input type="email" name="email"
+        placeholder="Enter your email" required>
+
+      <label>Password</label>
+      <input type="password" name="password"
+        minlength="10" placeholder="Create a password" required>
+
+      <label>Confirm Password</label>
+      <input type="password" name="confirmPassword"
+        minlength="10" placeholder="Confirm password" required>
+
+      <button class="btn" type="submit">Create Account</button>
+
+    </form>
+
+    <div id="authMessage" class="auth-message"></div>
+
+    <a href="/" class="auth-back">← Return to Homepage</a>
+
+  </div>
+
+</section>
+
+<footer>
+  <h3>PRINCE <span>VPS HOSTING</span></h3>
+  <small>© 2026 PRINCE VPS HOSTING</small>
+</footer>
+
+<script>
+const loginForm = document.getElementById("loginForm");
+const registerForm = document.getElementById("registerForm");
+const message = document.getElementById("authMessage");
+
+function showForm(type) {
+  const isLogin = type === "login";
+
+  loginForm.classList.toggle("hidden", !isLogin);
+  registerForm.classList.toggle("hidden", isLogin);
+
+  document.getElementById("loginTab")
+    .classList.toggle("active", isLogin);
+
+  document.getElementById("registerTab")
+    .classList.toggle("active", !isLogin);
+
+  document.querySelector(".auth-card h1").textContent =
+    isLogin ? "Welcome Back" : "Create Account";
+
+  message.textContent = "";
+}
+
+const selectedPlan = new URLSearchParams(location.search).get("plan");
+
+if (selectedPlan) {
+  sessionStorage.setItem("selectedPlan", selectedPlan);
+  showForm("register");
+}
+
+loginForm.addEventListener("submit", function(event) {
+  event.preventDefault();
+  message.textContent = "Login API will be connected in the backend setup.";
+});
+
+registerForm.addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  const password = registerForm.elements.password.value;
+  const confirm = registerForm.elements.confirmPassword.value;
+
+  if (password !== confirm) {
+    message.textContent = "Passwords do not match.";
+    return;
+  }
+
+  message.textContent =
+    "Registration API will be connected in the backend setup.";
+});
+</script>
+
+</body>
+</html>
