@@ -1,0 +1,27 @@
+
+{
+  "name": "prince-vps-hosting",
+  "version": "1.0.0",
+  "description": "PRINCE VPS HOSTING - Automated AWS VPS Selling Platform",
+  "type": "module",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js",
+    "dev": "node --watch main.js"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@aws-sdk/client-ec2": "^3.900.0",
+    "bcryptjs": "^3.0.2",
+    "connect-pg-simple": "^10.0.0",
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.1.0",
+    "express-session": "^1.18.2",
+    "helmet": "^8.1.0",
+    "pg": "^8.16.3",
+    "zod": "^4.1.12"
+  }
+}
