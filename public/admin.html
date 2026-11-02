@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel | PRINCE VPS</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #071225;
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      padding: 20px;
+      background: #0d1c35;
+      border-bottom: 1px solid #18365e;
+    }
+
+    header h2 {
+      color: #22baff;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 25px 15px;
+    }
+
+    .subtitle {
+      color: #9db2ce;
+      margin: 10px 0 25px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    .card {
+      background: #10213d;
+      border: 1px solid #1d3c65;
+      border-radius: 12px;
+      padding: 22px;
+      margin-bottom: 20px;
+    }
+
+    .card p {
+      color: #9db2ce;
+      margin-bottom: 12px;
+    }
+
+    .card h2 {
+      color: #22baff;
+      font-size: 28px;
+    }
+
+    h3 {
+      margin-bottom: 15px;
+    }
+
+    .empty {
+      color: #9db2ce;
+      padding: 20px 0;
+    }
+
+    .notice {
+      background: #332b13;
+      border: 1px solid #786124;
+      color: #ffe39a;
+      padding: 15px;
+      border-radius: 10px;
+      line-height: 1.6;
+      margin-top: 20px;
+    }
+
+    a {
+      color: #22baff;
+      text-decoration: none;
+    }
+
+    footer {
+      text-align: center;
+      color: #8298b5;
+      padding: 25px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h2>PRINCE VPS | ADMIN</h2>
+  </header>
+
+  <main class="container">
+    <h1>Admin Dashboard</h1>
+    <p class="subtitle">Manage your VPS hosting platform.</p>
+
+    <section class="stats">
+      <div class="card">
+        <p>Total Customers</p>
+        <h2>--</h2>
+      </div>
+
+      <div class="card">
+        <p>Total Orders</p>
+        <h2>--</h2>
+      </div>
+
+      <div class="card">
+        <p>Active VPS</p>
+        <h2>--</h2>
+      </div>
+
+      <div class="card">
+        <p>Revenue</p>
+        <h2>--</h2>
+      </div>
+    </section>
+
+    <section class="card">
+      <h3>Recent Orders</h3>
+      <p class="empty">No orders available yet.</p>
+    </section>
+
+    <section class="card">
+      <h3>Customer VPS Servers</h3>
+      <p class="empty">No VPS servers available yet.</p>
+    </section>
+
+    <div class="notice">
+      <strong>Security notice:</strong>
+      This is currently a frontend preview. Admin authentication
+      and server-side access protection must be implemented
+      before this page is used publicly.
+    </div>
+
+    <p style="margin-top:20px;">
+      <a href="/">← Back to Website</a>
+    </p>
+  </main>
+
+  <footer>
+    © 2026 PRINCE VPS HOSTING
+  </footer>
+
+</body>
+</html>
