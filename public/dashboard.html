@@ -1,0 +1,236 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Dashboard | PRINCE VPS</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #071225;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      background: #0d1c35;
+      border-bottom: 1px solid #18365e;
+      padding: 18px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    header h2 {
+      color: #22baff;
+    }
+
+    button, .btn {
+      border: none;
+      border-radius: 8px;
+      padding: 11px 16px;
+      background: #0878d1;
+      color: white;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 25px 15px;
+    }
+
+    .welcome {
+      margin-bottom: 25px;
+    }
+
+    .welcome p {
+      color: #9db2ce;
+      margin-top: 8px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    .card {
+      background: #10213d;
+      border: 1px solid #1d3c65;
+      border-radius: 12px;
+      padding: 22px;
+      margin-bottom: 20px;
+    }
+
+    .card p {
+      color: #9db2ce;
+      margin-bottom: 10px;
+    }
+
+    .card h2 {
+      color: #22baff;
+    }
+
+    .section {
+      margin-top: 25px;
+    }
+
+    .empty {
+      color: #9db2ce;
+      padding: 15px 0;
+      line-height: 1.6;
+    }
+
+    .message {
+      color: #ffb8c5;
+      margin-top: 15px;
+    }
+
+    footer {
+      text-align: center;
+      color: #8298b5;
+      padding: 25px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h2>PRINCE VPS</h2>
+    <button id="logoutButton">Logout</button>
+  </header>
+
+  <main class="container">
+
+    <section class="welcome">
+      <h1>Customer Dashboard</h1>
+      <p id="welcomeText">Loading your account...</p>
+      <p id="emailText"></p>
+      <p id="errorMessage" class="message"></p>
+    </section>
+
+    <section class="stats">
+
+      <div class="card">
+        <p>Total VPS</p>
+        <h2>0</h2>
+      </div>
+
+      <div class="card">
+        <p>Active VPS</p>
+        <h2>0</h2>
+      </div>
+
+      <div class="card">
+        <p>Pending Orders</p>
+        <h2>0</h2>
+      </div>
+
+    </section>
+
+    <section class="section card">
+      <h3>My VPS Servers</h3>
+      <p class="empty">
+        You have no VPS servers yet.
+        Purchase a plan to get started.
+      </p>
+      <a href="/plans.html" class="btn">View VPS Plans</a>
+    </section>
+
+    <section class="section card">
+      <h3>Account Information</h3>
+      <p id="customerName">Name: Loading...</p>
+      <p id="customerEmail">Email: Loading...</p>
+    </section>
+
+  </main>
+
+  <footer>
+    © 2026 PRINCE VPS HOSTING
+  </footer>
+
+  <script>
+    async function loadAccount() {
+      try {
+        const response = await fetch("/api/auth/me", {
+          credentials: "same-origin"
+        });
+
+        if (response.status === 401) {
+          window.location.replace("/login.html");
+          return;
+        }
+
+        const result = await response.json();
+
+        if (!response.ok || !result.success) {
+          throw new Error("Unable to load account.");
+        }
+
+        const customer = result.customer;
+
+        document.getElementById("welcomeText").textContent =
+          "Welcome, " + customer.full_name + "!";
+
+        document.getElementById("emailText").textContent =
+          customer.email;
+
+        document.getElementById("customerName").textContent =
+          "Name: " + customer.full_name;
+
+        document.getElementById("customerEmail").textContent =
+          "Email: " + customer.email;
+
+      } catch (error) {
+        document.getElementById("errorMessage").textContent =
+          error.message;
+      }
+    }
+
+    document.getElementById("logoutButton")
+      .addEventListener("click", async function () {
+
+        this.disabled = true;
+        this.textContent = "Logging out...";
+
+        try {
+          const response = await fetch("/api/auth/logout", {
+            method: "POST",
+            credentials: "same-origin"
+          });
+
+          if (!response.ok) {
+            throw new Error("Logout failed.");
+          }
+
+          window.location.replace("/login.html");
+
+        } catch (error) {
+          alert(error.message);
+          this.disabled = false;
+          this.textContent = "Logout";
+        }
+      });
+
+    loadAccount();
+  </script>
+
+</body>
+</html>
