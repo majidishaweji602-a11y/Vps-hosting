@@ -1,0 +1,37 @@
+
+# Environment secrets
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Runtime files
+pids/
+*.pid
+*.seed
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+tmp/
+temp/
+
+# Private keys
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Database backups
+*.sql
+*.dump
+*.backup
