@@ -1,0 +1,377 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | PRINCE VPS HOSTING</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #071225;
+      color: white;
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 420px;
+      background: #10213d;
+      border: 1px solid #1d3c65;
+      border-radius: 15px;
+      padding: 28px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #22baff;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #9db2ce;
+      margin-bottom: 25px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .tabs button {
+      flex: 1;
+      padding: 12px;
+      border: 1px solid #245080;
+      background: #0b1930;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .tabs button.active {
+      background: #0878d1;
+      border-color: #0878d1;
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 7px;
+      color: #c5d7ee;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px;
+      background: #071225;
+      color: white;
+      border: 1px solid #29486e;
+      border-radius: 8px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #22baff;
+    }
+
+    .submit {
+      width: 100%;
+      margin-top: 22px;
+      padding: 14px;
+      background: #0878d1;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .submit:disabled {
+      opacity: 0.6;
+      cursor: wait;
+    }
+
+    .message {
+      display: none;
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 15px;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    .message.error {
+      display: block;
+      background: #401c27;
+      color: #ffb8c5;
+    }
+
+    .message.success {
+      display: block;
+      background: #123b2c;
+      color: #a8f5c9;
+    }
+
+    .back {
+      display: block;
+      text-align: center;
+      margin-top: 22px;
+      color: #22baff;
+      text-decoration: none;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="container">
+    <h1>PRINCE VPS</h1>
+    <p class="subtitle">Customer Account Portal</p>
+
+    <div class="tabs">
+      <button type="button" id="loginTab" class="active">
+        Login
+      </button>
+
+      <button type="button" id="registerTab">
+        Register
+      </button>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <form id="loginForm">
+      <label for="loginEmail">Email Address</label>
+      <input
+        type="email"
+        id="loginEmail"
+        required
+        autocomplete="email"
+        placeholder="Enter your email"
+      >
+
+      <label for="loginPassword">Password</label>
+      <input
+        type="password"
+        id="loginPassword"
+        required
+        autocomplete="current-password"
+        placeholder="Enter your password"
+      >
+
+      <button class="submit" type="submit">
+        Login to Account
+      </button>
+    </form>
+
+    <!-- REGISTER FORM -->
+    <form id="registerForm" hidden>
+      <label for="fullName">Full Name</label>
+      <input
+        type="text"
+        id="fullName"
+        required
+        minlength="2"
+        maxlength="120"
+        autocomplete="name"
+        placeholder="Enter your full name"
+      >
+
+      <label for="registerEmail">Email Address</label>
+      <input
+        type="email"
+        id="registerEmail"
+        required
+        autocomplete="email"
+        placeholder="Enter your email"
+      >
+
+      <label for="registerPassword">Password</label>
+      <input
+        type="password"
+        id="registerPassword"
+        required
+        minlength="8"
+        maxlength="72"
+        autocomplete="new-password"
+        placeholder="At least 8 characters"
+      >
+
+      <label for="confirmPassword">Confirm Password</label>
+      <input
+        type="password"
+        id="confirmPassword"
+        required
+        minlength="8"
+        maxlength="72"
+        autocomplete="new-password"
+        placeholder="Repeat your password"
+      >
+
+      <button class="submit" type="submit">
+        Create Account
+      </button>
+    </form>
+
+    <div id="message" class="message" role="status"></div>
+
+    <a href="/" class="back">← Back to Website</a>
+  </main>
+
+  <script>
+    const loginTab = document.getElementById("loginTab");
+    const registerTab = document.getElementById("registerTab");
+
+    const loginForm = document.getElementById("loginForm");
+    const registerForm = document.getElementById("registerForm");
+
+    const message = document.getElementById("message");
+
+    function showMessage(text, type) {
+      message.textContent = text;
+      message.className = "message " + type;
+    }
+
+    function clearMessage() {
+      message.textContent = "";
+      message.className = "message";
+    }
+
+    function showLogin() {
+      loginForm.hidden = false;
+      registerForm.hidden = true;
+
+      loginTab.classList.add("active");
+      registerTab.classList.remove("active");
+
+      clearMessage();
+    }
+
+    function showRegister() {
+      loginForm.hidden = true;
+      registerForm.hidden = false;
+
+      registerTab.classList.add("active");
+      loginTab.classList.remove("active");
+
+      clearMessage();
+    }
+
+    loginTab.addEventListener("click", showLogin);
+    registerTab.addEventListener("click", showRegister);
+
+    async function sendRequest(url, data) {
+      const response = await fetch(url, {
+        method: "POST",
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.message || "Request failed.");
+      }
+
+      return result;
+    }
+
+    // LOGIN
+    loginForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const button = loginForm.querySelector("button");
+      button.disabled = true;
+      button.textContent = "Please wait...";
+
+      try {
+        const result = await sendRequest("/api/auth/login", {
+          email: document.getElementById("loginEmail").value,
+          password: document.getElementById("loginPassword").value
+        });
+
+        showMessage("Login successful. Redirecting...", "success");
+
+        window.location.href = "/dashboard";
+
+      } catch (error) {
+        showMessage(error.message, "error");
+      } finally {
+        button.disabled = false;
+        button.textContent = "Login to Account";
+      }
+    });
+
+    // REGISTER
+    registerForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const password =
+        document.getElementById("registerPassword").value;
+
+      const confirmPassword =
+        document.getElementById("confirmPassword").value;
+
+      if (password !== confirmPassword) {
+        showMessage("Passwords do not match.", "error");
+        return;
+      }
+
+      const button = registerForm.querySelector("button");
+      button.disabled = true;
+      button.textContent = "Creating account...";
+
+      try {
+        await sendRequest("/api/auth/register", {
+          fullName: document.getElementById("fullName").value,
+          email: document.getElementById("registerEmail").value,
+          password
+        });
+
+        registerForm.reset();
+
+        showMessage(
+          "Account created successfully. Please login.",
+          "success"
+        );
+
+        showLogin();
+
+        showMessage(
+          "Account created successfully. Please login.",
+          "success"
+        );
+
+      } catch (error) {
+        showMessage(error.message, "error");
+      } finally {
+        button.disabled = false;
+        button.textContent = "Create Account";
+      }
+    });
+
+    // Open registration tab when a plan is selected
+    if (new URLSearchParams(window.location.search).has("plan")) {
+      showRegister();
+    }
+  </script>
+
+</body>
+</html>
